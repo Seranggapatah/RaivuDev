@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Raivu Playground 03</title>
+  <meta charset="UTF-8" />
+</head>
+
+<body>
+  <div id="loading-overlay">
+    <canvas id="loading-canvas"></canvas>
+  </div>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-start">
+        <div class="logo">
+          <div class="logo-wrapper">
+            <canvas id="logo-canvas-nav"></canvas>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="#works">Works</a>
+          <a href="#pricing">Pricing</a>
+        </div>
+      </div>
+      <div class="nav-cta">
+        <div class="cta-wrapper">
+          <canvas id="cta-canvas-nav"></canvas>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div id="app-container">
+    <div class="hero-container">
+      <canvas id="rive-canvas"></canvas>
+      <div class="scroll-indicator">
+        <img src="./src/Scroll.svg" alt="Scroll to continue" />
+      </div>
+    </div>
+    <section id="green-section">
+      <div class="content">
+        <canvas id="logo-canvas-hero"></canvas>
+      </div>
+    </section>
+
+  </div>
+  <script src="./src/index.ts" type="module"></script>
+</body>
+
+</html>
