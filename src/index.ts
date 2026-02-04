@@ -9,6 +9,26 @@
 
 import "./styles.css";
 import { Rive, Layout, Fit, Alignment, EventType, RiveEventType } from "@rive-app/webgl";
+import Lenis from 'lenis';
+
+// Initialize Lenis for smooth scrolling
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  orientation: 'vertical',
+  gestureOrientation: 'vertical',
+  smoothWheel: true,
+  wheelMultiplier: 1,
+  touchMultiplier: 2,
+  infinite: false,
+});
+
+function raf(time: number) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+
+requestAnimationFrame(raf);
 
 // ---------------------------------
 // The layout of the graphic will adhere to
@@ -54,7 +74,7 @@ window
 
 // NOTE: This function is not called in this example.
 function cleanUpRive() {
-  riveInstance.cleanup();
+  riveInstance?.cleanup();
 }
 
 const startTime = Date.now();
@@ -70,6 +90,7 @@ let loadingInstance: Rive | null = null;
 let logoInstanceNav: Rive | null = null;
 let logoInstanceHero: Rive | null = null;
 let logoInstanceCta: Rive | null = null;
+let riveInstance: Rive | null = null;
 
 if (loadingCanvas) {
   loadingInstance = new Rive({
@@ -159,7 +180,7 @@ function hideLoader() {
   }, remainingTime);
 }
 
-const riveInstance = new Rive({
+riveInstance = new Rive({
   src: new URL("./raivumascot262.riv", import.meta.url).toString(),
 
   stateMachines: ["State Machine 1"],
@@ -173,7 +194,7 @@ const riveInstance = new Rive({
   onLoad: () => {
     console.log("✓ Rive file loaded successfully!");
     // Prevent a blurry canvas by using the device pixel ratio
-    riveInstance.resizeDrawingSurfaceToCanvas();
+    riveInstance?.resizeDrawingSurfaceToCanvas();
     hideLoader();
   },
 
@@ -182,4 +203,19 @@ const riveInstance = new Rive({
 // Fallback: hide loader when window is fully loaded even if Rive takes too long or fails
 window.addEventListener("load", () => {
   hideLoader();
+});
+
+// Handle smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = e.currentTarget as HTMLAnchorElement;
+    const targetId = target.getAttribute('href');
+    if (targetId && targetId !== '#') {
+      const targetElement = document.querySelector(targetId) as HTMLElement;
+      if (targetElement) {
+        lenis.scrollTo(targetElement);
+      }
+    }
+  });
 });
