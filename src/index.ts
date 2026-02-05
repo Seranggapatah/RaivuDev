@@ -10,6 +10,51 @@
 import "./styles.css";
 import { Rive, Layout, Fit, Alignment, EventType, RiveEventType } from "@rive-app/webgl";
 import Lenis from 'lenis';
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+// ... (Lenis setup remains) ...
+
+// Horizontal Scroll Animation for #works section
+// Wait for window load to ensure all styles and layout are applied
+window.addEventListener("load", () => {
+  const worksSection = document.getElementById("works");
+  const horizontalWrapper = document.querySelector(".horizontal-wrapper");
+
+  if (worksSection && horizontalWrapper) {
+    console.log("Initializing Horizontal Scroll (Load Event)");
+
+    // Calculate distance dynamically
+    const getScrollAmount = () => {
+      const scrollWidth = horizontalWrapper.scrollWidth;
+      const viewWidth = window.innerWidth;
+      const amount = -(scrollWidth - viewWidth);
+      console.log(`Scroll Amount: ${amount} (ScrollWidth: ${scrollWidth}, ViewWidth: ${viewWidth})`);
+      return amount;
+    }
+
+    // Creating the animation
+    gsap.to(horizontalWrapper, {
+      x: getScrollAmount,
+      ease: "none",
+      scrollTrigger: {
+        trigger: worksSection,
+        start: "top top",
+        end: () => `+=${horizontalWrapper.scrollWidth - window.innerWidth}`,
+        pin: true,
+        scrub: 1, // Smooth scrubbing
+        invalidateOnRefresh: true, // Recalculate on resize
+        markers: true, // Keep markers for debugging
+      }
+    });
+
+    ScrollTrigger.refresh();
+  } else {
+    console.error("Horizontal scroll elements not found on load");
+  }
+});
 
 // Initialize Lenis for smooth scrolling
 const lenis = new Lenis({
@@ -23,12 +68,15 @@ const lenis = new Lenis({
   infinite: false,
 });
 
-function raf(time: number) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
+// Connect Lenis to ScrollTrigger
+lenis.on('scroll', ScrollTrigger.update);
 
-requestAnimationFrame(raf);
+// Use GSAP's ticker for Lenis
+gsap.ticker.add((time: number) => {
+  lenis.raf(time * 1000);
+});
+
+gsap.ticker.lagSmoothing(0);
 
 // ---------------------------------
 // The layout of the graphic will adhere to
@@ -94,7 +142,7 @@ let riveInstance: Rive | null = null;
 
 if (loadingCanvas) {
   loadingInstance = new Rive({
-    src: new URL("./loadingRiv2.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/loadingRiv2.riv", import.meta.url).toString(),
     canvas: loadingCanvas,
     autoplay: true,
     useOffscreenRenderer: true,
@@ -107,7 +155,7 @@ if (loadingCanvas) {
 // Logo in Navbar
 if (logoCanvasNav) {
   logoInstanceNav = new Rive({
-    src: new URL("./logo_raivu2.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/logo_raivu2.riv", import.meta.url).toString(),
     stateMachines: ["State Machine 1"],
     canvas: logoCanvasNav,
     autoplay: true,
@@ -123,7 +171,7 @@ if (logoCanvasNav) {
 // Logo in Hero Section
 if (logoCanvasHero) {
   logoInstanceHero = new Rive({
-    src: new URL("./logo_raivu2.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/logo_raivu2.riv", import.meta.url).toString(),
     stateMachines: ["State Machine 1"],
     canvas: logoCanvasHero,
     autoplay: true,
@@ -139,7 +187,7 @@ if (logoCanvasHero) {
 // CTA in Navbar
 if (ctaCanvasNav) {
   logoInstanceCta = new Rive({
-    src: new URL("./contact_us_raivu.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/contact_us_raivu.riv", import.meta.url).toString(),
     stateMachines: ["State Machine 1"],
     canvas: ctaCanvasNav,
     layout: new Layout({
@@ -181,7 +229,7 @@ function hideLoader() {
 }
 
 riveInstance = new Rive({
-  src: new URL("./raivumascot262.riv", import.meta.url).toString(),
+  src: new URL("./assets/rive/raivumascot262.riv", import.meta.url).toString(),
 
   stateMachines: ["State Machine 1"],
   canvas: riveCanvas,
@@ -219,3 +267,5 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+

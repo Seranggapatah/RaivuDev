@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
 html {
   scroll-behavior: initial;
 }
@@ -23,8 +25,10 @@ html.lenis body {
   pointer-events: none;
 }
 
+
+
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Outfit', 'Google Sans Flex', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #000;
@@ -163,8 +167,10 @@ body {
 }
 
 #app-container {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  width: 100%;
+  overflow-x: hidden;
+  /* Prevent horizontal scrollbar on body */
 }
 
 .hero-container {
@@ -199,6 +205,28 @@ body {
   right: 0;
   bottom: 0;
   background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 80%);
+  pointer-events: none;
+}
+
+#blue-section {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#blue-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 80%);
   pointer-events: none;
 }
 
@@ -291,5 +319,123 @@ body {
   .cta-wrapper {
     width: 90px;
     height: 36px;
+  }
+}
+
+/* Horizontal Scroll Section */
+.horizontal-section {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background-color: #ffffff;
+  /* Matching theme */
+  display: flex;
+  align-items: center;
+}
+
+.horizontal-wrapper {
+  display: flex;
+  gap: 80px;
+  /* Space between boxes */
+  padding-left: max(calc(50vw - 500px), calc(50vw - 30vw));
+  /* Centers the first box (max-width logic) */
+  padding-right: max(calc(50vw - 500px), calc(50vw - 30vw));
+  /* Centers the last box */
+  width: max-content;
+  height: 100%;
+  align-items: center;
+}
+
+.scroll-box {
+  width: 60vw;
+  max-width: 1000px;
+  aspect-ratio: 1 / 1;
+  background-color: #1a1a1a;
+  border-radius: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.box-text {
+  background: transparent;
+  color: #000000;
+  text-align: left;
+  /* Align to left as per typical design for this typography */
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  /* Stack icon above text */
+  justify-content: center;
+  /* Center vertically */
+  align-items: flex-start;
+  /* Align siblings to the left */
+  position: relative;
+}
+
+.box-icon {
+  width: 380px;
+  height: 380px;
+  position: absolute;
+  top: 200px;
+  right: -60px;
+}
+
+.box-text h2 {
+  font-family: 'Outfit', 'Google Sans Flex', 'Inter', sans-serif;
+  font-weight: 800;
+  /* ExtraBold */
+  font-size: 102.83px;
+  /* Exact size from guide */
+  line-height: 91%;
+  /* Exact line height from guide */
+  letter-spacing: -0.02em;
+  /* -2% from guide */
+  text-transform: none;
+  margin: 0;
+}
+
+/* Placeholder styles for images */
+.box-image {
+  background-size: cover;
+  background-position: center;
+}
+
+.box-2 {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+}
+
+.box-3 {
+  background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+}
+
+.box-4 {
+  background: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
+
+.box-5 {
+  background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+}
+
+@media (max-width: 768px) {
+  .horizontal-wrapper {
+    gap: 24px;
+    padding-left: calc(50vw - 40vw);
+    padding-right: calc(50vw - 40vw);
+    /* 80vw width on mobile */
+  }
+
+  .scroll-box {
+    width: 80vw;
+  }
+
+  .box-text h2 {
+    font-size: 42px;
+    /* Scale down for mobile */
+    line-height: 1.1;
   }
 }
