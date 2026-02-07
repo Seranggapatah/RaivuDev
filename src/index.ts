@@ -229,7 +229,7 @@ function hideLoader() {
 }
 
 riveInstance = new Rive({
-  src: new URL("./assets/rive/raivumascot262.riv", import.meta.url).toString(),
+  src: new URL("./assets/rive/raivumascot_Final3.riv", import.meta.url).toString(),
 
   stateMachines: ["State Machine 1"],
   canvas: riveCanvas,

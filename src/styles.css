@@ -70,12 +70,11 @@ body {
   width: 100%;
   z-index: 1000;
   padding: 20px 0;
-  backdrop-filter: blur(10px);
   background: rgba(29, 41, 61, 1);
 }
 
 .nav-container {
-  max-width: 1440px;
+  max-width: 1050px;
   margin: 0 auto;
   padding: 0 40px;
   display: flex;
@@ -267,28 +266,22 @@ body {
   }
 }
 
-/* Responsive Breakpoints */
+
 @media (max-width: 768px) {
   .nav-container {
     padding: 0 20px;
+    justify-content: flex-start;
   }
 
-  .nav-start {
-    gap: 20px;
+  .nav-links,
+  .nav-cta {
+    display: none;
   }
 
-  .nav-links {
-    gap: 20px;
-  }
-
-  .nav-links a {
-    font-size: 14px;
-  }
-
-  .logo-wrapper,
-  .cta-wrapper {
-    width: 110px;
-    height: 44px;
+  /* Reset logo size to be larger ("besar") on mobile, or at least default size */
+  .logo-wrapper {
+    width: 150px;
+    height: 60px;
   }
 
   #logo-canvas-hero {
@@ -305,20 +298,6 @@ body {
   .nav-container {
     padding: 0 24px;
     /* Matches the 24px margin in the design */
-  }
-
-  .nav-start {
-    gap: 10px;
-  }
-
-  .nav-links {
-    gap: 15px;
-  }
-
-  .logo-wrapper,
-  .cta-wrapper {
-    width: 90px;
-    height: 36px;
   }
 }
 
@@ -405,20 +384,30 @@ body {
   background-position: center;
 }
 
+.inner-box {
+  width: 75%;
+  height: 75%;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  transform: translateZ(0);
+  /* Fix for potential safari radius issues */
+}
+
 .box-2 {
-  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #ffffff 99%, #fecfef 100%);
 }
 
 .box-3 {
-  background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+  background-color: #ffffff;
 }
 
 .box-4 {
-  background: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+  background-color: #ffffff;
 }
 
 .box-5 {
-  background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+  background-color: #ffffff;
 }
 
 @media (max-width: 768px) {
