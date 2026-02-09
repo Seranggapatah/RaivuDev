@@ -186,14 +186,17 @@ body {
 }
 
 #green-section {
-  min-height: 100vh;
-  width: 100%;
-  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
   overflow: hidden;
+}
+
+#riveCanvas2 {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 #green-section::before {
@@ -205,6 +208,8 @@ body {
   bottom: 0;
   background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 80%);
   pointer-events: none;
+  z-index: 2;
+  /* Ensure overlay is on top if desired, or remove if canvas should be top */
 }
 
 #blue-section {

@@ -101,6 +101,7 @@ function computeSize() {
   logoInstanceHero?.resizeDrawingSurfaceToCanvas();
   loadingInstance?.resizeDrawingSurfaceToCanvas();
   logoInstanceCta?.resizeDrawingSurfaceToCanvas();
+  riveInstance2?.resizeDrawingSurfaceToCanvas();
 }
 
 // Subscribe to window size changes and update call `resizeDrawingSurfaceToCanvas`
@@ -133,12 +134,14 @@ const loadingCanvas = document.getElementById("loading-canvas") as HTMLCanvasEle
 const logoCanvasNav = document.getElementById("logo-canvas-nav") as HTMLCanvasElement;
 const logoCanvasHero = document.getElementById("logo-canvas-hero") as HTMLCanvasElement;
 const ctaCanvasNav = document.getElementById("cta-canvas-nav") as HTMLCanvasElement;
+const riveCanvas2 = document.getElementById("riveCanvas2") as HTMLCanvasElement;
 
 let loadingInstance: Rive | null = null;
 let logoInstanceNav: Rive | null = null;
 let logoInstanceHero: Rive | null = null;
 let logoInstanceCta: Rive | null = null;
 let riveInstance: Rive | null = null;
+let riveInstance2: Rive | null = null;
 
 if (loadingCanvas) {
   loadingInstance = new Rive({
@@ -247,6 +250,32 @@ riveInstance = new Rive({
   },
 
 });
+
+if (riveCanvas2) {
+  riveInstance2 = new Rive({
+    src: new URL("./assets/rive/calkulator.riv", import.meta.url).toString(),
+
+    stateMachines: ["State Machine 1"],
+    canvas: riveCanvas2,
+    artboard: "mainCal",
+    autoBind: true,
+    layout: layout, // This is optional. Provides additional layout control.
+    autoplay: true,
+    isTouchScrollEnabled: true,
+    useOffscreenRenderer: true,
+    onLoad: () => {
+      console.log("✓ Rive file loaded successfully!");
+      // Prevent a blurry canvas by using the device pixel ratio
+      riveInstance?.resizeDrawingSurfaceToCanvas();
+    },
+
+  });
+}
+
+
+
+
+
 
 // Fallback: hide loader when window is fully loaded even if Rive takes too long or fails
 window.addEventListener("load", () => {
