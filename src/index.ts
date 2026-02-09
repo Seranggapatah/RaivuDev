@@ -102,6 +102,7 @@ function computeSize() {
   loadingInstance?.resizeDrawingSurfaceToCanvas();
   logoInstanceCta?.resizeDrawingSurfaceToCanvas();
   riveInstance2?.resizeDrawingSurfaceToCanvas();
+  riveInstance3?.resizeDrawingSurfaceToCanvas();
 }
 
 // Subscribe to window size changes and update call `resizeDrawingSurfaceToCanvas`
@@ -135,6 +136,7 @@ const logoCanvasNav = document.getElementById("logo-canvas-nav") as HTMLCanvasEl
 const logoCanvasHero = document.getElementById("logo-canvas-hero") as HTMLCanvasElement;
 const ctaCanvasNav = document.getElementById("cta-canvas-nav") as HTMLCanvasElement;
 const riveCanvas2 = document.getElementById("riveCanvas2") as HTMLCanvasElement;
+const riveCanvas3 = document.getElementById("riveCanvas3") as HTMLCanvasElement;
 
 let loadingInstance: Rive | null = null;
 let logoInstanceNav: Rive | null = null;
@@ -142,6 +144,7 @@ let logoInstanceHero: Rive | null = null;
 let logoInstanceCta: Rive | null = null;
 let riveInstance: Rive | null = null;
 let riveInstance2: Rive | null = null;
+let riveInstance3: Rive | null = null;
 
 if (loadingCanvas) {
   loadingInstance = new Rive({
@@ -266,7 +269,27 @@ if (riveCanvas2) {
     onLoad: () => {
       console.log("✓ Rive file loaded successfully!");
       // Prevent a blurry canvas by using the device pixel ratio
-      riveInstance?.resizeDrawingSurfaceToCanvas();
+      riveInstance2?.resizeDrawingSurfaceToCanvas();
+    },
+
+  });
+}
+if (riveCanvas3) {
+  riveInstance3 = new Rive({
+    src: new URL("./assets/rive/ball.riv", import.meta.url).toString(),
+
+    stateMachines: ["State Machine 1"],
+    canvas: riveCanvas3,
+    artboard: "mainPlay",
+    autoBind: true,
+    layout: layout, // This is optional. Provides additional layout control.
+    autoplay: true,
+    isTouchScrollEnabled: true,
+    useOffscreenRenderer: true,
+    onLoad: () => {
+      console.log("✓ Rive file loaded successfully!");
+      // Prevent a blurry canvas by using the device pixel ratio
+      riveInstance3?.resizeDrawingSurfaceToCanvas();
     },
 
   });
@@ -276,9 +299,9 @@ if (riveCanvas2) {
 
 
 
-
 // Fallback: hide loader when window is fully loaded even if Rive takes too long or fails
 window.addEventListener("load", () => {
+  computeSize();
   hideLoader();
 });
 
