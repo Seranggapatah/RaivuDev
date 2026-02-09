@@ -25,6 +25,24 @@ html.lenis body {
   pointer-events: none;
 }
 
+/* 🚀 PERFORMANCE HACK: Matikan hover/pointer events saat scaling/scrolling cepat */
+.lenis.lenis-scrolling * {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/* GPU Acceleration Hints untuk container utama */
+.hero-container,
+.horizontal-section,
+#green-section,
+#blue-section {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  contain: content;
+  /* Browser tidak perlu render ulang layout di luar box ini */
+}
+
 
 
 body {
@@ -319,6 +337,8 @@ body {
   /* Matching theme */
   display: flex;
   align-items: center;
+  /* Optimasi Scroll Container */
+  will-change: transform;
 }
 
 .horizontal-wrapper {
@@ -332,6 +352,11 @@ body {
   width: max-content;
   height: 100%;
   align-items: center;
+  /* 🚀 GPU Force layer untuk animasi scroll horizontal */
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .scroll-box {

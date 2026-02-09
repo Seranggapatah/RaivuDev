@@ -44,7 +44,7 @@ window.addEventListener("load", () => {
         start: "top top",
         end: () => `+=${horizontalWrapper.scrollWidth - window.innerWidth}`,
         pin: true,
-        scrub: 1, // Smooth scrubbing
+        scrub: 0.1, // Less scrubbing delay feels faster/smoother
         invalidateOnRefresh: true, // Recalculate on resize
         markers: true, // Keep markers for debugging
       }
@@ -61,10 +61,7 @@ const lenis = new Lenis({
   duration: 1.2,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   orientation: 'vertical',
-  gestureOrientation: 'vertical',
   smoothWheel: true,
-  wheelMultiplier: 1,
-  touchMultiplier: 2,
   infinite: false,
 });
 
@@ -95,14 +92,18 @@ if (!riveCanvas) {
   throw new Error("Canvas element with id 'rive-canvas' not found!");
 }
 
+// Optimization: Cap pixel ratio at 2x for performance on high-DPI screens
+// Higher than 2x yields diminishing returns visually but massive performance costs
 function computeSize() {
-  riveInstance?.resizeDrawingSurfaceToCanvas();
-  logoInstanceNav?.resizeDrawingSurfaceToCanvas();
-  logoInstanceHero?.resizeDrawingSurfaceToCanvas();
-  loadingInstance?.resizeDrawingSurfaceToCanvas();
-  logoInstanceCta?.resizeDrawingSurfaceToCanvas();
-  riveInstance2?.resizeDrawingSurfaceToCanvas();
-  riveInstance3?.resizeDrawingSurfaceToCanvas();
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  riveInstance?.resizeDrawingSurfaceToCanvas(dpr);
+  logoInstanceNav?.resizeDrawingSurfaceToCanvas(dpr);
+  logoInstanceHero?.resizeDrawingSurfaceToCanvas(dpr);
+  loadingInstance?.resizeDrawingSurfaceToCanvas(dpr);
+  logoInstanceCta?.resizeDrawingSurfaceToCanvas(dpr);
+  riveInstance2?.resizeDrawingSurfaceToCanvas(dpr);
+  riveInstance3?.resizeDrawingSurfaceToCanvas(dpr);
 }
 
 // Subscribe to window size changes and update call `resizeDrawingSurfaceToCanvas`
@@ -248,7 +249,10 @@ riveInstance = new Rive({
   onLoad: () => {
     console.log("✓ Rive file loaded successfully!");
     // Prevent a blurry canvas by using the device pixel ratio
-    riveInstance?.resizeDrawingSurfaceToCanvas();
+    // Use capped pixel ratio
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    riveInstance?.resizeDrawingSurfaceToCanvas(dpr);
+    observeRiveVisibility(riveInstance!, riveCanvas);
     hideLoader();
   },
 
@@ -256,7 +260,7 @@ riveInstance = new Rive({
 
 if (riveCanvas2) {
   riveInstance2 = new Rive({
-    src: new URL("./assets/rive/calkulator.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/calkulator2.riv", import.meta.url).toString(),
 
     stateMachines: ["State Machine 1"],
     canvas: riveCanvas2,
@@ -269,14 +273,16 @@ if (riveCanvas2) {
     onLoad: () => {
       console.log("✓ Rive file loaded successfully!");
       // Prevent a blurry canvas by using the device pixel ratio
-      riveInstance2?.resizeDrawingSurfaceToCanvas();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      riveInstance2?.resizeDrawingSurfaceToCanvas(dpr);
+      observeRiveVisibility(riveInstance2!, riveCanvas2);
     },
 
   });
 }
 if (riveCanvas3) {
   riveInstance3 = new Rive({
-    src: new URL("./assets/rive/ball.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/ballball3.riv", import.meta.url).toString(),
 
     stateMachines: ["State Machine 1"],
     canvas: riveCanvas3,
@@ -289,7 +295,9 @@ if (riveCanvas3) {
     onLoad: () => {
       console.log("✓ Rive file loaded successfully!");
       // Prevent a blurry canvas by using the device pixel ratio
-      riveInstance3?.resizeDrawingSurfaceToCanvas();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      riveInstance3?.resizeDrawingSurfaceToCanvas(dpr);
+      observeRiveVisibility(riveInstance3!, riveCanvas3);
     },
 
   });
@@ -298,6 +306,23 @@ if (riveCanvas3) {
 
 
 
+
+// Helper to optimize performance: only play when visible
+function observeRiveVisibility(rive: Rive, canvas: HTMLElement) {
+  if (!rive || !canvas) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        rive.play();
+      } else {
+        rive.pause();
+      }
+    });
+  }, { threshold: 0.1 }); // Trigger when 10% visible
+
+  observer.observe(canvas);
+}
 
 // Fallback: hide loader when window is fully loaded even if Rive takes too long or fails
 window.addEventListener("load", () => {
