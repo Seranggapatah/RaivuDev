@@ -42,12 +42,47 @@ window.addEventListener("load", () => {
       scrollTrigger: {
         trigger: worksSection,
         start: "top top",
-        end: () => `+=${horizontalWrapper.scrollWidth - window.innerWidth}`,
+        end: () => `+=${horizontalWrapper.scrollWidth}`,
         pin: true,
-        scrub: 0.1, // Less scrubbing delay feels faster/smoother
-        invalidateOnRefresh: true, // Recalculate on resize
-        markers: true, // Keep markers for debugging
+        scrub: 0.1,
+        invalidateOnRefresh: true,
+        markers: false,
       }
+    });
+
+    ScrollTrigger.refresh();
+
+    // Dedicated ticker for the curved effect to ensure it runs smoothly every frame
+    // separating it from the scroll tween
+    gsap.ticker.add(() => {
+      const boxes = document.querySelectorAll(".scroll-box");
+      const viewportCenter = window.innerWidth / 2;
+
+      // Atur kelengkungan di sini:
+      // Angka lebih BESAR = Lingkaran lebih BESAR (Lengkungan lebih landai/flat)
+      // Angka lebih KECIL = Lingkaran lebih KECIL (Lengkungan lebih tajam/curam)
+      const radius = window.innerWidth * 12;
+
+      boxes.forEach((box) => {
+        // Get the current position relative to the viewport
+        const rect = box.getBoundingClientRect();
+        const boxCenter = rect.left + rect.width / 2;
+        const distanceFromCenter = boxCenter - viewportCenter;
+
+        // Parabolic curve: y = x^2 / (2 * R)
+        // This makes the center highest (y=0) and edges lower (y > 0)
+        const y = Math.pow(distanceFromCenter, 2) / (2 * radius);
+
+        // Rotation: angle = distance / radius
+        const angleRad = distanceFromCenter / radius;
+        const angleDeg = angleRad * (180 / Math.PI);
+
+        gsap.set(box, {
+          y: y,
+          rotation: angleDeg,
+          transformOrigin: "center center"
+        });
+      });
     });
 
     ScrollTrigger.refresh();
@@ -64,6 +99,31 @@ const lenis = new Lenis({
   smoothWheel: true,
   infinite: false,
 });
+
+// Smart Navbar Logic (Hide on Scroll Down, Show on Scroll Up)
+let lastScrollTop = 0;
+const navbar = document.querySelector('.navbar');
+
+if (navbar) {
+  lenis.on('scroll', ({ scroll }) => {
+    const scrollTop = scroll;
+
+    // Always show navbar at the very top (buffer of 50px)
+    if (scrollTop < 50) {
+      navbar.classList.remove('navbar-hidden');
+    }
+    // Scroll Down -> Hide Navbar
+    else if (scrollTop > lastScrollTop && scrollTop > 100) {
+      navbar.classList.add('navbar-hidden');
+    }
+    // Scroll Up -> Show Navbar
+    else if (scrollTop < lastScrollTop) {
+      navbar.classList.remove('navbar-hidden');
+    }
+
+    lastScrollTop = scrollTop;
+  });
+}
 
 // Connect Lenis to ScrollTrigger
 lenis.on('scroll', ScrollTrigger.update);
@@ -282,7 +342,7 @@ if (riveCanvas2) {
 }
 if (riveCanvas3) {
   riveInstance3 = new Rive({
-    src: new URL("./assets/rive/ballball3.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/ball_pysicupdate2.riv", import.meta.url).toString(),
 
     stateMachines: ["State Machine 1"],
     canvas: riveCanvas3,
