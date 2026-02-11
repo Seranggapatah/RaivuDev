@@ -1,0 +1,38 @@
+
+> rive-quick-start-js@1.0.0 build
+> parcel build index.html
+
+🚨 Build failed.
+
+Error: bundleInfoMap[bundleId] 
+is not iterable
+
+  TypeError: 
+  bundleInfoMap[bundleId] is not
+   iterable
+      at 
+  getBundlesIncludedInHash 
+  (/Users/macbook/RaivuDEV/RaivuDev/node_modules/@parcel/core/lib/requests/WriteBundlesRequest.js:151:33)
+      at 
+  getBundlesIncludedInHash 
+  (/Users/macbook/RaivuDEV/RaivuDev/node_modules/@parcel/core/lib/requests/WriteBundlesRequest.js:155:9)
+      at assignComplexNameHashes
+   
+  (/Users/macbook/RaivuDEV/RaivuDev/node_modules/@parcel/core/lib/requests/WriteBundlesRequest.js:146:105)
+      at Object.run 
+  (/Users/macbook/RaivuDEV/RaivuDev/node_modules/@parcel/core/lib/requests/WriteBundlesRequest.js:123:5)
+      at async 
+  RequestTracker.runRequest 
+  (/Users/macbook/RaivuDEV/RaivuDev/node_modules/@parcel/core/lib/RequestTracker.js:758:20)
+      at async Object.run 
+  (/Users/macbook/RaivuDEV/RaivuDev/node_modules/@parcel/core/lib/requests/ParcelBuildRequest.js:69:20)
+      at async 
+  RequestTracker.runRequest 
+  (/Users/macbook/RaivuDEV/RaivuDev/node_modules/@parcel/core/lib/RequestTracker.js:758:20)
+      at async Parcel._build 
+  (/Users/macbook/RaivuDEV/RaivuDev/node_modules/@parcel/core/lib/Parcel.js:320:11)
+      at async Parcel.run 
+  (/Users/macbook/RaivuDEV/RaivuDev/node_modules/@parcel/core/lib/Parcel.js:210:18)
+      at async run 
+  (/Users/macbook/RaivuDEV/RaivuDev/node_modules/parcel/lib/cli.js:357:7)
+

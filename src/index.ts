@@ -209,8 +209,9 @@ let riveInstance3: Rive | null = null;
 
 if (loadingCanvas) {
   loadingInstance = new Rive({
-    src: new URL("./assets/rive/loadingRiv2.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/loading3.riv", import.meta.url).toString(),
     canvas: loadingCanvas,
+    artboard: "Artboard",
     autoplay: true,
     useOffscreenRenderer: true,
     onLoad: () => {
@@ -290,7 +291,7 @@ function hideLoader() {
       setTimeout(() => {
         loadingInstance?.cleanup();
         loadingInstance = null;
-      }, 500);
+      }, 100);
     }
   }, remainingTime);
 }
