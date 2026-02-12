@@ -105,20 +105,22 @@ let lastScrollTop = 0;
 const navbar = document.querySelector('.navbar');
 
 if (navbar) {
-  lenis.on('scroll', ({ scroll }) => {
-    const scrollTop = scroll;
 
-    // Always show navbar at the very top (buffer of 50px)
-    if (scrollTop < 50) {
+  lenis.on('scroll', ({ scroll }: { scroll: number }) => {
+    const scrollTop = scroll;
+    const scrollDelta = scrollTop - lastScrollTop;
+
+    // Minimum scroll movement to trigger change (prevents jitter)
+    if (Math.abs(scrollDelta) < 5) return;
+
+    // Logic:
+    // 1. Scrolling UP (delta < 0) OR at the very top (scrollTop < 50) -> SHOW
+    // 2. Scrolling DOWN (delta > 0) AND not at top -> HIDE
+
+    if (scrollDelta < 0 || scrollTop < 50) {
       navbar.classList.remove('navbar-hidden');
-    }
-    // Scroll Down -> Hide Navbar
-    else if (scrollTop > lastScrollTop && scrollTop > 100) {
+    } else if (scrollDelta > 0 && scrollTop > 50) {
       navbar.classList.add('navbar-hidden');
-    }
-    // Scroll Up -> Show Navbar
-    else if (scrollTop < lastScrollTop) {
-      navbar.classList.remove('navbar-hidden');
     }
 
     lastScrollTop = scrollTop;
@@ -255,7 +257,7 @@ if (logoCanvasHero) {
 // CTA in Navbar
 if (ctaCanvasNav) {
   logoInstanceCta = new Rive({
-    src: new URL("./assets/rive/contact_us_raivu.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/contact_us_raivuV2.riv", import.meta.url).toString(),
     stateMachines: ["State Machine 1"],
     canvas: ctaCanvasNav,
     layout: new Layout({
@@ -321,7 +323,7 @@ riveInstance = new Rive({
 
 if (riveCanvas2) {
   riveInstance2 = new Rive({
-    src: new URL("./assets/rive/calkulator2.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/calkulatorV6.riv", import.meta.url).toString(),
 
     stateMachines: ["State Machine 1"],
     canvas: riveCanvas2,
@@ -331,6 +333,7 @@ if (riveCanvas2) {
     autoplay: true,
     isTouchScrollEnabled: true,
     useOffscreenRenderer: true,
+    automaticallyHandleEvents: true,
     onLoad: () => {
       console.log("✓ Rive file loaded successfully!");
       // Prevent a blurry canvas by using the device pixel ratio
@@ -343,7 +346,7 @@ if (riveCanvas2) {
 }
 if (riveCanvas3) {
   riveInstance3 = new Rive({
-    src: new URL("./assets/rive/ball_pysicupdate2.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/ball_pysicupdateV3.riv", import.meta.url).toString(),
 
     stateMachines: ["State Machine 1"],
     canvas: riveCanvas3,
@@ -353,6 +356,8 @@ if (riveCanvas3) {
     autoplay: true,
     isTouchScrollEnabled: true,
     useOffscreenRenderer: true,
+    dispatchPointerExit: true,
+    automaticallyHandleEvents: true,
     onLoad: () => {
       console.log("✓ Rive file loaded successfully!");
       // Prevent a blurry canvas by using the device pixel ratio
