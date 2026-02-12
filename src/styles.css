@@ -28,7 +28,7 @@ html.lenis body {
 /* 🚀 PERFORMANCE HACK: Matikan hover/pointer events saat scaling/scrolling cepat */
 /* 🚀 PERFORMANCE HACK: Matikan hover events TAPI biarkan interaksi klik */
 .lenis.lenis-scrolling {
-  pointer-events: none !important;
+  pointer-events: auto !important;
 }
 
 .lenis.lenis-scrolling a,
@@ -496,31 +496,110 @@ body {
 }
 
 @media (max-width: 768px) {
+
+  /* Vertical Layout for Mobile - Gallery Style */
+  .horizontal-section {
+    height: auto;
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    overflow-y: visible;
+    display: block;
+    padding: 40px 0;
+    width: 100vw;
+    /* Full viewport width */
+    max-width: 100%;
+  }
+
   .horizontal-wrapper {
+    display: flex;
+    flex-direction: column;
     gap: 24px;
-    /* <--- ATUR JARAK ANTAR KOTAK (MOBILE) DI SINI */
-    padding-left: calc(50vw - 40vw);
-    padding-right: calc(50vw - 40vw);
-    /* 80vw width on mobile */
+    padding: 0 16px;
+    /* Standard internal padding */
+    width: 100%;
+    height: auto;
+
+    /* Reset transforms and positioning */
+    transform: none !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+
+    /* Fix potential width issues */
+    box-sizing: border-box;
+  }
+
+  /* Reset box sizing */
+  .scroll-box {
+    width: 100%;
+    max-width: 100%;
+    height: 400px;
+    margin: 0;
+
+    /* Stop any residual transforms */
+    transform: none !important;
+    opacity: 1 !important;
+    /* Ensure visibility */
   }
 
   .scroll-box {
-    width: 80vw;
+    width: 100%;
+    /* Full width cards */
+    max-width: none;
+    aspect-ratio: auto;
+    height: 400px;
+    /* Fixed height for boxes */
   }
 
-  .box-text h2 {
-    font-size: 42px;
-    /* Scale down for mobile */
-    line-height: 1.1;
+  /* Reset special transforms for mobile */
+  .scroll-box {
+    transform: none !important;
   }
 
+  .nav-container {
+    padding: 0 20px;
+    justify-content: center;
+  }
+
+  .nav-links,
+  .nav-cta {
+    display: none;
+  }
+
+  /* Reset logo size to be larger ("besar") on mobile, or at least default size */
+  .logo-wrapper {
+    width: 150px;
+    height: 60px;
+  }
+
+  #logo-canvas-hero {
+    width: 300px;
+    height: 150px;
+  }
+
+  .scroll-indicator {
+    bottom: 30px;
+  }
+
+  /* Specific height for Calculator Rive section on mobile */
   #green-section {
     height: 1000px;
   }
 
   .box-icon {
     scale: 0.2;
-    top: 35px;
+    top: -6px;
     right: -82px;
   }
+
+  .box-text {
+    height: auto;
+    min-height: 300px;
+  }
+
+  .box-text h2 {
+    font-size: 42px;
+    line-height: 1.1;
+  }
+
 }

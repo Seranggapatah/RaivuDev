@@ -24,6 +24,12 @@ window.addEventListener("load", () => {
   const horizontalWrapper = document.querySelector(".horizontal-wrapper");
 
   if (worksSection && horizontalWrapper) {
+    // Only enable horizontal scroll logic on Desktop
+    if (window.innerWidth <= 768) {
+      console.log("Mobile view detected: Skipping horizontal scroll animation.");
+      return;
+    }
+
     console.log("Initializing Horizontal Scroll (Load Event)");
 
     // Calculate distance dynamically
@@ -55,6 +61,9 @@ window.addEventListener("load", () => {
     // Dedicated ticker for the curved effect to ensure it runs smoothly every frame
     // separating it from the scroll tween
     gsap.ticker.add(() => {
+      // Disable on mobile to prevent "sliding around"
+      if (window.innerWidth <= 768) return;
+
       const boxes = document.querySelectorAll(".scroll-box");
       const viewportCenter = window.innerWidth / 2;
 
@@ -299,7 +308,7 @@ function hideLoader() {
 }
 
 riveInstance = new Rive({
-  src: new URL("./assets/rive/raivumascot_Final3.riv", import.meta.url).toString(),
+  src: new URL("./assets/rive/raivumascotV2.riv", import.meta.url).toString(),
 
   stateMachines: ["State Machine 1"],
   canvas: riveCanvas,
