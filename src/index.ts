@@ -308,7 +308,7 @@ function hideLoader() {
 }
 
 riveInstance = new Rive({
-  src: new URL("./assets/rive/raivumascotV2.riv", import.meta.url).toString(),
+  src: new URL("./assets/rive/raivumascot_FinalV4.riv", import.meta.url).toString(),
 
   stateMachines: ["State Machine 1"],
   canvas: riveCanvas,
@@ -319,6 +319,20 @@ riveInstance = new Rive({
   isTouchScrollEnabled: true,
   useOffscreenRenderer: true,
   onLoad: () => {
+    // Connect Scroll to Rive Input
+    lenis.on('scroll', ({ progress }: { progress: number }) => {
+      if (!riveInstance?.viewModelInstance) return;
+
+      const vmi = riveInstance.viewModelInstance;
+      const scrollInput = vmi.number("ScrollParalax");
+
+      if (scrollInput) {
+        // Map progress (0-1) to 1-100
+        const value = 1 + (progress * 90);
+        scrollInput.value = value;
+      }
+    });
+
     console.log("✓ Rive file loaded successfully!");
     // Prevent a blurry canvas by using the device pixel ratio
     // Use capped pixel ratio
