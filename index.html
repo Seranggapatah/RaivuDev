@@ -29,6 +29,12 @@
 
   <link rel="icon" type="image/svg+xml" href="./src/assets/images/favicon.svg" />
 
+  <!-- Font Optimization -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+
+
   <!-- Structured Data -->
   <script type="application/ld+json">
     {
@@ -81,7 +87,7 @@
       <h1 class="visually-hidden">Expert Rive Animation & Mascot Design Services</h1>
       <canvas id="rive-canvas"></canvas>
       <div class="scroll-indicator">
-        <img src="./src/assets/images/Scroll.svg" alt="Scroll to continue" />
+        <img src="./src/assets/images/Scroll.svg" alt="Scroll to continue" loading="lazy" />
       </div>
     </div>
 
@@ -89,30 +95,30 @@
     <section id="works" class="horizontal-section">
       <div class="horizontal-wrapper">
         <div class="scroll-box box-text">
-          <img src="./src/assets/images/icon.svg" alt="Icon" class="box-icon" />
+          <img src="./src/assets/images/icon.svg" alt="Icon" class="box-icon" loading="lazy" />
           <h2>Give Motion for Every Screen.<br>Web, Apps, Games.</h2>
         </div>
         <div class="scroll-box box-image box-2">
           <div class="inner-box">
-            <video src="./src/assets/webm/konten01.webm" autoplay loop muted playsinline
+            <video src="./src/assets/webm/konten01.webm" class="lazy-video" preload="none" loop muted playsinline
               style="width: 100%; height: 100%; object-fit: cover;"></video>
           </div>
         </div>
         <div class="scroll-box box-image box-3">
           <div class="inner-box">
-            <video src="./src/assets/webm/konten2.webm" autoplay loop muted playsinline
+            <video src="./src/assets/webm/konten2.webm" class="lazy-video" preload="none" loop muted playsinline
               style="width: 100%; height: 100%; object-fit: cover;"></video>
           </div>
         </div>
         <div class="scroll-box box-image box-4">
           <div class="inner-box">
-            <video src="./src/assets/webm/konten3.webm" autoplay loop muted playsinline
+            <video src="./src/assets/webm/konten3.webm" class="lazy-video" preload="none" loop muted playsinline
               style="width: 100%; height: 100%; object-fit: cover;"></video>
           </div>
         </div>
         <div class="scroll-box box-image box-5">
           <div class="inner-box">
-            <video src="./src/assets/webm/konten4.webm" autoplay loop muted playsinline
+            <video src="./src/assets/webm/konten4.webm" class="lazy-video" preload="none" loop muted playsinline
               style="width: 100%; height: 100%; object-fit: cover;"></video>
           </div>
         </div>
