@@ -346,7 +346,7 @@ riveInstance = new Rive({
 
 if (riveCanvas2) {
   riveInstance2 = new Rive({
-    src: new URL("./assets/rive/calkulatorV6.riv", import.meta.url).toString(),
+    src: new URL("./assets/rive/calkulatorV7.riv", import.meta.url).toString(),
 
     stateMachines: ["State Machine 1"],
     canvas: riveCanvas2,
