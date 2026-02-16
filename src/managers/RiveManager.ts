@@ -51,6 +51,7 @@ export class RiveManager {
                 autoBind: true,
                 artboard: "Artboard",
                 automaticallyHandleEvents: true,
+                isTouchScrollEnabled: true,
                 onLoad: () => {
                     instance.resizeDrawingSurfaceToCanvas(Math.min(window.devicePixelRatio || 1, 2));
                     // Manually handle Open URL events
@@ -79,7 +80,7 @@ export class RiveManager {
         const riveCanvas2 = document.getElementById("riveCanvas2") as HTMLCanvasElement;
         if (riveCanvas2) {
             loader.observe(riveCanvas2, () => {
-                this.createRiveInstance(riveCanvas2, new URL("../assets/rive/calkulatorV7.riv", import.meta.url).href, ["State Machine 1"], true, "mainCal");
+                this.createRiveInstance(riveCanvas2, new URL("../assets/rive/calkulatorVFix.riv", import.meta.url).href, ["State Machine 1"], true, "mainCal");
             });
         }
 
@@ -110,7 +111,7 @@ export class RiveManager {
                     const vmi = riveInstance.viewModelInstance;
                     const scrollInput = vmi.number("ScrollParalax");
                     if (scrollInput) {
-                        const value = 1 + (progress * 90);
+                        const value = 0 + (progress * 60);
                         scrollInput.value = value;
                     }
                 });
@@ -134,6 +135,7 @@ export class RiveManager {
             autoplay: true,
             useOffscreenRenderer: true,
             automaticallyHandleEvents: autoHandleEvents,
+            isTouchScrollEnabled: true,
             onLoad: () => {
                 const dpr = Math.min(window.devicePixelRatio || 1, 2);
                 instance.resizeDrawingSurfaceToCanvas(dpr);

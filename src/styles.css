@@ -1,5 +1,6 @@
 html {
   scroll-behavior: initial;
+  overscroll-behavior: none;
 }
 
 html.lenis,
@@ -59,6 +60,7 @@ body {
   background-color: #000;
   color: #fff;
   overflow-x: hidden;
+  overscroll-behavior: none;
 }
 
 /* Utility to visually hide elements but keep them accessible for screen readers/SEO */
@@ -415,7 +417,7 @@ body {
   width: 60vw;
   max-width: 1000px;
   aspect-ratio: 1 / 1;
-  background-color: #1a1a1a;
+  background-color: #ffffff;
   border-radius: 32px;
   flex-shrink: 0;
   display: flex;
@@ -478,6 +480,10 @@ body {
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
   transform: translateZ(0);
   /* Fix for potential safari radius issues */
+}
+
+.inner-box video {
+  background-color: #ffffff;
 }
 
 .box-2 {
@@ -595,7 +601,6 @@ body {
 
   .box-text {
     height: auto;
-    min-height: 300px;
   }
 
   .box-text h2 {
