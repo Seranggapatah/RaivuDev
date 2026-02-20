@@ -129,11 +129,11 @@ body {
 
 .nav-container {
   width: 100%;
-  max-width: 1200px;
+  /*max-width: 1200px;*/
   /* Requested max-width */
   margin: 0 20px;
   /* Add side margins so it doesn't touch screen edges on smaller screens */
-  padding: 12px 32px;
+  /*padding: 12px 177px;*/
   /* Inner padding */
   display: flex;
   justify-content: space-between;
@@ -160,14 +160,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
   /* Ensures content stays within bounds if scaled up */
 }
 
 #logo-canvas-nav {
   position: relative;
-  top: 13px;
-  left: 20px;
+  top: 4px;
+  left: 0px;
   width: 200%;
   height: 200%;
 }
@@ -202,6 +202,7 @@ body {
 .nav-links {
   display: flex;
   gap: 32px;
+  align-items: center;
   /* Adjust spacing between text links as needed */
 }
 
@@ -210,12 +211,23 @@ body {
   color: rgb(255, 255, 255);
   font-weight: 600;
   font-size: 16px;
-  font-family: 'Google Sans Flex', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Avenir Next Condensed', 'Avenir', sans-serif;
   transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
   color: #fff;
+}
+
+.nav-icon-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon-line-img {
+  width: 6px;
+  height: 6px;
 }
 
 .btn-contact {
@@ -343,6 +355,7 @@ body {
 
 @media (max-width: 768px) {
   .nav-container {
+
     padding: 0 20px;
     justify-content: center;
   }
@@ -452,8 +465,34 @@ body {
   scale: 1;
 }
 
+.box-text h3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1D293D;
+  font-family: 'Avenir Next Condensed', 'Avenir', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  margin: 0 0 16px 0;
+}
+
+.box-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.box-title-icon-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
 .box-text h2 {
-  font-family: 'Outfit', 'Google Sans Flex', 'Inter', sans-serif;
+  color: #1D293D;
+  font-family: 'Avenir Next Condensed', 'Avenir', sans-serif;
   font-weight: 800;
   /* ExtraBold */
   font-size: 102.83px;

@@ -9,7 +9,7 @@ export class RiveManager {
     constructor() {
         this.layout = new Layout({
             fit: Fit.Layout,
-            layoutScaleFactor: 0.93,
+            layoutScaleFactor: 1.1,
         });
 
         // Handle resizing
@@ -42,7 +42,7 @@ export class RiveManager {
         const ctaCanvasNav = document.getElementById("cta-canvas-nav") as HTMLCanvasElement;
         if (ctaCanvasNav) {
             const instance = new Rive({
-                src: new URL("../assets/rive/contact_us_raivuV2.riv", import.meta.url).href,
+                src: new URL("../assets/rive/contact_us_raivuNewVersion.riv", import.meta.url).href,
                 stateMachines: ["State Machine 1"],
                 canvas: ctaCanvasNav,
                 layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
@@ -68,7 +68,8 @@ export class RiveManager {
     }
 
     public initLazyAnimations(lenisInstance: any) {
-        const loader = new LazyLoader();
+        const loader = new LazyLoader({ rootMargin: "1700px 0px" }); // Load early
+
 
         // 1. Main Mascot (Bottom of Hero)
         const riveCanvas = document.getElementById("rive-canvas") as HTMLCanvasElement;
@@ -80,7 +81,7 @@ export class RiveManager {
         const riveCanvas2 = document.getElementById("riveCanvas2") as HTMLCanvasElement;
         if (riveCanvas2) {
             loader.observe(riveCanvas2, () => {
-                this.createRiveInstance(riveCanvas2, new URL("../assets/rive/calkulatorVFix.riv", import.meta.url).href, ["State Machine 1"], true, "mainCal");
+                this.createRiveInstance(riveCanvas2, new URL("../assets/rive/calkulatorCompress.riv", import.meta.url).href, ["State Machine 1"], true, "mainCal");
             });
         }
 
@@ -88,14 +89,14 @@ export class RiveManager {
         const riveCanvas3 = document.getElementById("riveCanvas3") as HTMLCanvasElement;
         if (riveCanvas3) {
             loader.observe(riveCanvas3, () => {
-                this.createRiveInstance(riveCanvas3, new URL("../assets/rive/ball_pysicupdateV3.riv", import.meta.url).href, ["State Machine 1"], true, "mainPlay");
+                this.createRiveInstance(riveCanvas3, new URL("../assets/rive/ballCompress.riv", import.meta.url).href, ["State Machine 1"], true, "mainPlay");
             });
         }
     }
 
     private setupMainMascot(canvas: HTMLCanvasElement, lenis: any) {
         const riveInstance = new Rive({
-            src: new URL("../assets/rive/raivumascot_FinalV4.riv", import.meta.url).href,
+            src: new URL("../assets/rive/raivumascotNewVersion.riv", import.meta.url).href,
             stateMachines: ["State Machine 1"],
             canvas: canvas,
             artboard: "MainArtboard",
