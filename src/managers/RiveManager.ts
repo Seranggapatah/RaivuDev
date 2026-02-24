@@ -81,7 +81,7 @@ export class RiveManager {
         const riveCanvas2 = document.getElementById("riveCanvas2") as HTMLCanvasElement;
         if (riveCanvas2) {
             loader.observe(riveCanvas2, () => {
-                this.createRiveInstance(riveCanvas2, new URL("../assets/rive/calkulatorCompress.riv", import.meta.url).href, ["State Machine 1"], true, "mainCal");
+                this.createRiveInstance(riveCanvas2, new URL("../assets/rive/calkulator_versi_terbaruV4.riv", import.meta.url).href, ["State Machine 1"], true, "mainCal");
             });
         }
 

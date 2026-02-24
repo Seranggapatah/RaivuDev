@@ -60,7 +60,7 @@ export class ScrollManager {
                         start: "top 75%", // Mulai perlahan saat baru masuk atas layar
                         end: "center center", // Selesai maksimal saat posisinya di tengah
                         scrub: true, // `true` agar membalik seketika saat di-scroll ke atas
-                        markers: true, // DEBUG: Shows start and end lines on the screen
+                        markers: false, // DEBUG: Shows start and end lines on the screen
                     }
                 }
             );
