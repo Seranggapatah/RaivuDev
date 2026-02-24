@@ -164,12 +164,24 @@ export class ScrollManager {
         // Use ScrollTrigger to detect direction
         const navbar = document.querySelector('.navbar');
         if (navbar) {
+            // Set initial state
+            if (window.scrollY < 50) {
+                navbar.classList.add('navbar-top');
+            }
+
             ScrollTrigger.create({
                 start: "top top",
                 end: 99999,
                 onUpdate: (self) => {
                     const scrollTop = self.scroll();
                     const direction = self.direction; // 1 = down, -1 = up
+
+                    // Toggle transparent background class at the top
+                    if (scrollTop < 50) {
+                        navbar.classList.add('navbar-top');
+                    } else {
+                        navbar.classList.remove('navbar-top');
+                    }
 
                     // Logic:
                     // 1. Scrolling UP (direction -1) OR at the very top (scrollTop < 50) -> SHOW

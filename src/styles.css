@@ -110,7 +110,7 @@ body {
   right: 0;
   margin: 0 auto;
   width: 100%;
-  max-width: 1338px;
+  /*max-width: 1338px;*/
   z-index: 1000;
   padding: 24px 0;
   /* Removed background here to move it to the container for the "card" look if desired, 
@@ -134,7 +134,7 @@ body {
   width: 100%;
   /*max-width: 1200px;*/
   /* Requested max-width */
-  margin: 0 20px;
+  margin: 0 0px;
   /* Add side margins so it doesn't touch screen edges on smaller screens */
   /*padding: 12px 177px;*/
   /* Inner padding */
@@ -144,12 +144,18 @@ body {
 
   /* The "Rectangle with Border" Look */
   background: rgb(29, 41, 61);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
   /* moved background here */
-  border-radius: 35px;
+  /*border-radius: 35px;
   /* Rounded corners for the rectangle */
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0, );
   /* Drop shadow */
 
+}
+
+.navbar.navbar-top .nav-container {
+  background-color: transparent !important;
+  box-shadow: none !important;
 }
 
 .logo {
@@ -270,7 +276,7 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  background-color: #000;
+  background-color: #1D293D;
 }
 
 #green-section {
@@ -319,6 +325,33 @@ body {
   right: 0;
   bottom: 0;
   pointer-events: none;
+}
+
+.blue-text-container {
+  color: #fff;
+  position: absolute;
+  top: 24%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: left;
+  z-index: 10;
+  pointer-events: none;
+  padding: 0 40px;
+  /* Ditambah sedikit padding kiri kanan agar tidak terlalu nempel jika butuh spasi */
+  box-sizing: border-box;
+}
+
+.blue-text-container h2 {
+  font-family: 'Avenir Next Condensed', 'Avenir', sans-serif;
+  font-weight: 900;
+  /* Use pure vw so it scales smoothly with the browser width indefinitely */
+  font-size: 13.5vw;
+  line-height: 90%;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0;
+  text-transform: none;
 }
 
 .content {
