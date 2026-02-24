@@ -107,7 +107,10 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
+  margin: 0 auto;
   width: 100%;
+  max-width: 1338px;
   z-index: 1000;
   padding: 24px 0;
   /* Removed background here to move it to the container for the "card" look if desired, 
@@ -142,7 +145,7 @@ body {
   /* The "Rectangle with Border" Look */
   background: rgb(29, 41, 61);
   /* moved background here */
-  border-radius: 16px;
+  border-radius: 35px;
   /* Rounded corners for the rectangle */
   box-shadow: 0 0px 0px rgba(0, 0, 0, 0, );
   /* Drop shadow */
@@ -183,6 +186,9 @@ body {
 }
 
 #cta-canvas-nav {
+  position: relative;
+  top: 0px;
+  left: 6px;
   width: 200%;
   height: 200%;
 }
@@ -472,22 +478,23 @@ body {
   color: #1D293D;
   font-family: 'Avenir Next Condensed', 'Avenir', sans-serif;
   font-weight: 600;
-  font-size: 28px;
-  margin: 0 0 16px 0;
+  font-size: 16px;
+  margin: 0 0 0 0;
 }
 
 .box-title-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 24px;
 }
 
 .box-title-icon-img {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: 6px;
+  height: 6px;
 }
 
 .box-text h2 {
@@ -503,6 +510,49 @@ body {
   /* -2% from guide */
   text-transform: none;
   margin: 0;
+}
+
+.about-section {
+  width: 100%;
+  padding: 100px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  /* matching horizontal-section background if needed, or keeping it transparent based on preference */
+}
+
+@media (max-width: 768px) {
+  .about-section {
+    padding: 40px 16px;
+  }
+}
+
+.about-box {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  aspect-ratio: auto;
+  /* override scroll-box 1/1 aspect ratio */
+  padding: 60px;
+}
+
+@media (max-width: 768px) {
+  .about-box {
+    padding: 30px;
+  }
+}
+
+.about-desc-text {
+  font-family: 'Google Sans Flex', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-size: 40px !important;
+  font-weight: 750 !important;
+  font-variation-settings: 'ROND' 44 !important;
+  color: #1D293D !important;
+  line-height: 120% !important;
+  letter-spacing: -0.02em !important;
+  margin: 0;
+  text-transform: none !important;
 }
 
 /* Placeholder styles for images */

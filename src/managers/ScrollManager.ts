@@ -14,6 +14,7 @@ export class ScrollManager {
         // Wait for window load to ensure all styles and layout are applied
         window.addEventListener("load", () => {
             this.initHorizontalScroll();
+            this.initAboutAnimation(); // Dipindah ke sini agar posisi scroll dikalkulasi setelah pinning #works selesai
         });
 
         // Smart Navbar
@@ -21,6 +22,52 @@ export class ScrollManager {
 
         // Smooth Scroll anchors
         this.initAnchorScroll();
+    }
+
+    private initAboutAnimation() {
+        const aboutText = document.querySelector(".about-desc-text");
+        const aboutSection = document.querySelector(".about-section");
+
+        if (aboutText && aboutSection) {
+            const originalHTML = aboutText.innerHTML;
+            let newHTML = "";
+            let inTag = false;
+            for (let i = 0; i < originalHTML.length; i++) {
+                const char = originalHTML[i];
+                if (char === '<') {
+                    inTag = true;
+                }
+                if (!inTag && char.trim() !== '') {
+                    newHTML += `<span class="about-char" style="opacity: 0.1;">${char}</span>`;
+                } else {
+                    newHTML += char;
+                }
+                if (char === '>') {
+                    inTag = false;
+                }
+            }
+            aboutText.innerHTML = newHTML;
+
+            const chars = aboutText.querySelectorAll('.about-char');
+            gsap.fromTo(chars,
+                { opacity: 0.1 },
+                {
+                    opacity: 1,
+                    ease: "none",
+                    stagger: 0.1,
+                    scrollTrigger: {
+                        trigger: aboutSection,
+                        start: "top 75%", // Mulai perlahan saat baru masuk atas layar
+                        end: "center center", // Selesai maksimal saat posisinya di tengah
+                        scrub: true, // `true` agar membalik seketika saat di-scroll ke atas
+                        markers: true, // DEBUG: Shows start and end lines on the screen
+                    }
+                }
+            );
+            console.log("About animation initialized successfully. Chars found:", chars.length);
+        } else {
+            console.error("About text or section not found:", { aboutText, aboutSection });
+        }
     }
 
     private initHorizontalScroll() {

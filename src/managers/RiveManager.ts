@@ -89,7 +89,7 @@ export class RiveManager {
         const riveCanvas3 = document.getElementById("riveCanvas3") as HTMLCanvasElement;
         if (riveCanvas3) {
             loader.observe(riveCanvas3, () => {
-                this.createRiveInstance(riveCanvas3, new URL("../assets/rive/ballCompress.riv", import.meta.url).href, ["State Machine 1"], true, "mainPlay");
+                this.createRiveInstance(riveCanvas3, new URL("../assets/rive/ball_pysicupdateoldversionV5.riv", import.meta.url).href, ["State Machine 1"], true, "mainPlay");
             });
         }
     }
