@@ -81,7 +81,14 @@ export class RiveManager {
         const riveCanvas2 = document.getElementById("riveCanvas2") as HTMLCanvasElement;
         if (riveCanvas2) {
             loader.observe(riveCanvas2, () => {
-                this.createRiveInstance(riveCanvas2, new URL("../assets/rive/calkulator_versi_terbaruV4.riv", import.meta.url).href, ["State Machine 1"], true, "mainCal");
+                this.createRiveInstance(
+                    riveCanvas2,
+                    new URL("../assets/rive/calkulator_versi_di_tulis_ulang.riv", import.meta.url).href,
+                    ["State Machine 1"],
+                    true,
+                    "mainCal",
+                    new Layout({ fit: Fit.Contain, alignment: Alignment.Center })
+                );
             });
         }
 
@@ -96,12 +103,15 @@ export class RiveManager {
 
     private setupMainMascot(canvas: HTMLCanvasElement, lenis: any) {
         const riveInstance = new Rive({
-            src: new URL("../assets/rive/raivumascot_new_versionVersi_baruLgi.riv", import.meta.url).href,
+            src: new URL("../assets/rive/raivumascot_Version_final.riv", import.meta.url).href,
             stateMachines: ["State Machine 1"],
             canvas: canvas,
             artboard: "MainArtboard",
             autoBind: true,
-            /*layout: this.layout,*/
+            layout: new Layout({
+                fit: Fit.Contain,
+                alignment: Alignment.BottomCenter,
+            }),
             autoplay: true,
             isTouchScrollEnabled: true,
             useOffscreenRenderer: true,
@@ -125,14 +135,14 @@ export class RiveManager {
         });
     }
 
-    private createRiveInstance(canvas: HTMLCanvasElement, assetUrl: string, stateMachines: string[], autoHandleEvents: boolean = false, artboard: string = "Artboard") {
+    private createRiveInstance(canvas: HTMLCanvasElement, assetUrl: string, stateMachines: string[], autoHandleEvents: boolean = false, artboard: string = "Artboard", customLayout?: Layout) {
         const instance = new Rive({
             src: assetUrl,
             stateMachines: stateMachines,
             canvas: canvas,
             artboard: artboard,
             autoBind: true,
-            layout: this.layout,
+            layout: customLayout || this.layout,
             autoplay: true,
             useOffscreenRenderer: true,
             automaticallyHandleEvents: autoHandleEvents,
