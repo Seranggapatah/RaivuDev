@@ -83,7 +83,7 @@ export class RiveManager {
             loader.observe(riveCanvas2, () => {
                 this.createRiveInstance(
                     riveCanvas2,
-                    new URL("../assets/rive/calkulator_versi_di_tulis_ulang.riv", import.meta.url).href,
+                    new URL("../assets/rive/calkulator_Final_V2.riv", import.meta.url).href,
                     ["State Machine 1"],
                     true,
                     "mainCal",

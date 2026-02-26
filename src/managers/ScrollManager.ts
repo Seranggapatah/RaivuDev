@@ -152,17 +152,13 @@ export class ScrollManager {
     }
 
     private initSmartNavbar() {
-        // We will assume Lenis is handled elsewhere or passed in if needed, 
-        // but for Navbar we can use native scroll if Lenis syncs it, or just use Lenis instance.
-        // Actually, in the original code, Smart Navbar was using Lenis 'scroll' event.
-        // We normally want to decouple this. 
-        // GSAP ScrollTrigger can also handle this if we want, but let's stick to the structure.
-        // Since we are decoupling, we might need to pass the lenis instance or use a global current scroll.
-        // For simplicity in this refactor, let's allow passing a callback or handle it in index.ts
-        // BUT, let's keep it here if we can.
-
         // Use ScrollTrigger to detect direction
         const navbar = document.querySelector('.navbar');
+        const heroSection = document.querySelector('.hero-container') as HTMLElement;
+        let isSticky = false;
+        let lastScrollTop = 0;
+        let scrollAccumulator = 0;
+
         if (navbar) {
             // Set initial state
             if (window.scrollY < 50) {
@@ -174,7 +170,17 @@ export class ScrollManager {
                 end: 99999,
                 onUpdate: (self) => {
                     const scrollTop = self.scroll();
-                    const direction = self.direction; // 1 = down, -1 = up
+                    const threshold = heroSection ? heroSection.offsetHeight : window.innerHeight;
+
+                    // Calculate a smoothed direction to avoid flickering (glitch) on trackpads
+                    const delta = scrollTop - lastScrollTop;
+                    lastScrollTop = scrollTop;
+
+                    // Accumulate scroll in the current direction
+                    if ((delta > 0 && scrollAccumulator < 0) || (delta < 0 && scrollAccumulator > 0)) {
+                        scrollAccumulator = 0; // Reset if direction changed
+                    }
+                    scrollAccumulator += delta;
 
                     // Toggle transparent background class at the top
                     if (scrollTop < 50) {
@@ -183,14 +189,48 @@ export class ScrollManager {
                         navbar.classList.remove('navbar-top');
                     }
 
-                    // Logic:
-                    // 1. Scrolling UP (direction -1) OR at the very top (scrollTop < 50) -> SHOW
-                    // 2. Scrolling DOWN (direction 1) AND not at top -> HIDE
+                    // Navbar is at the very top (reset to original)
+                    if (scrollTop <= 10) {
+                        if (isSticky) {
+                            isSticky = false;
+                            (navbar as HTMLElement).style.transition = 'none';
+                            navbar.classList.remove('navbar-fixed');
+                            navbar.classList.remove('navbar-hidden');
+                            requestAnimationFrame(() => {
+                                requestAnimationFrame(() => {
+                                    (navbar as HTMLElement).style.transition = '';
+                                });
+                            });
+                        }
+                        return;
+                    }
 
-                    if (direction === -1 || scrollTop < 50) {
-                        navbar.classList.remove('navbar-hidden');
-                    } else if (direction === 1 && scrollTop > 50) {
+                    // In section 1, while it's still absolute, let it scroll away naturally
+                    if (scrollTop > 10 && scrollTop < threshold && !isSticky) {
+                        return;
+                    }
+
+                    // Once we cross threshold, it becomes a "Smart Navbar" (sticky)
+                    if (scrollTop >= threshold && !isSticky) {
+                        isSticky = true;
+                        (navbar as HTMLElement).style.transition = 'none';
+                        navbar.classList.add('navbar-fixed');
                         navbar.classList.add('navbar-hidden');
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                (navbar as HTMLElement).style.transition = '';
+                            });
+                        });
+                    }
+
+                    // While in sticky mode, react to direction with a threshold to prevent glitching
+                    if (isSticky) {
+                        // Only hide/show if we've scrolled distinctly in one direction (e.g. 15px)
+                        if (scrollAccumulator < -15) {
+                            navbar.classList.remove('navbar-hidden');
+                        } else if (scrollAccumulator > 15 && scrollTop > 50) {
+                            navbar.classList.add('navbar-hidden');
+                        }
                     }
                 }
             });
