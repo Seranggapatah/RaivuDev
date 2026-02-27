@@ -81,14 +81,7 @@ export class RiveManager {
         const riveCanvas2 = document.getElementById("riveCanvas2") as HTMLCanvasElement;
         if (riveCanvas2) {
             loader.observe(riveCanvas2, () => {
-                this.createRiveInstance(
-                    riveCanvas2,
-                    new URL("../assets/rive/calkulator_Final_V2.riv", import.meta.url).href,
-                    ["State Machine 1"],
-                    true,
-                    "mainCal",
-                    new Layout({ fit: Fit.Contain, alignment: Alignment.Center })
-                );
+                this.setupCalculator(riveCanvas2);
             });
         }
 
@@ -103,7 +96,7 @@ export class RiveManager {
 
     private setupMainMascot(canvas: HTMLCanvasElement, lenis: any) {
         const riveInstance = new Rive({
-            src: new URL("../assets/rive/raivumascot_Version_final.riv", import.meta.url).href,
+            src: new URL("../assets/rive/raivumascot_WmobileV2.riv", import.meta.url).href,
             stateMachines: ["State Machine 1"],
             canvas: canvas,
             artboard: "MainArtboard",
@@ -116,16 +109,54 @@ export class RiveManager {
             isTouchScrollEnabled: true,
             useOffscreenRenderer: true,
             onLoad: () => {
-                // Connect Scroll to Rive Input
-                lenis.on('scroll', ({ progress }: { progress: number }) => {
-                    if (!riveInstance?.viewModelInstance) return;
-                    const vmi = riveInstance.viewModelInstance;
-                    const scrollInput = vmi.number("ScrollParalax");
-                    if (scrollInput) {
-                        const value = 0 + (progress * 60);
-                        scrollInput.value = value;
+                const vmi = riveInstance.viewModelInstance;
+                const isMobileRive = vmi.boolean("isMobile");
+
+                const updateMobileState = () => {
+                    if (isMobileRive) {
+                        isMobileRive.value = window.innerWidth <= 768;
                     }
-                });
+                };
+
+                updateMobileState();
+                window.addEventListener('resize', updateMobileState);
+
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                riveInstance.resizeDrawingSurfaceToCanvas(dpr);
+                this.activeInstances.push(riveInstance);
+                this.observeVisibility(riveInstance, canvas);
+            }
+        });
+    }
+
+    private setupCalculator(canvas: HTMLCanvasElement) {
+        const riveInstance = new Rive({
+            src: new URL("../assets/rive/calkulator_versi_di_tulis_ulangV2.riv", import.meta.url).href,
+            stateMachines: ["State Machine 1"],
+            canvas: canvas,
+            artboard: "mainCal",
+            autoBind: true,
+            layout: new Layout({ fit: Fit.Contain, alignment: Alignment.Center }),
+            autoplay: true,
+            isTouchScrollEnabled: true,
+            useOffscreenRenderer: true,
+            automaticallyHandleEvents: true,
+            onLoad: () => {
+                try {
+                    const vmi = riveInstance.viewModelInstance;
+                    if (vmi) {
+                        const isMobileRive = vmi.boolean("isMobileCal");
+                        const updateMobileState = () => {
+                            if (isMobileRive) {
+                                isMobileRive.value = window.innerWidth <= 768;
+                            }
+                        };
+                        updateMobileState();
+                        window.addEventListener('resize', updateMobileState);
+                    }
+                } catch (e) {
+                    console.warn("Could not bind isMobile to calculator", e);
+                }
 
                 const dpr = Math.min(window.devicePixelRatio || 1, 2);
                 riveInstance.resizeDrawingSurfaceToCanvas(dpr);
