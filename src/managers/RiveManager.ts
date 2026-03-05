@@ -131,7 +131,7 @@ export class RiveManager {
 
     private setupCalculator(canvas: HTMLCanvasElement) {
         const riveInstance = new Rive({
-            src: new URL("../assets/rive/calkulator_versi_di_tulis_ulangV2.riv", import.meta.url).href,
+            src: new URL("../assets/rive/calkulator_versi_di_tulis_ulangVupdate.riv", import.meta.url).href,
             stateMachines: ["State Machine 1"],
             canvas: canvas,
             artboard: "mainCal",
