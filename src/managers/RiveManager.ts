@@ -86,17 +86,35 @@ export class RiveManager {
         }
 
         // 3. Ball Physics (Blue Section)
+        // 3. Ball Physics (Blue Section)
         const riveCanvas3 = document.getElementById("riveCanvas3") as HTMLCanvasElement;
         if (riveCanvas3) {
             loader.observe(riveCanvas3, () => {
-                this.createRiveInstance(riveCanvas3, new URL("../assets/rive/ball_pisikversiv1_f.riv", import.meta.url).href, ["State Machine 1"], true, "mainPlay");
+                const instance = new Rive({
+                    src: new URL("../assets/rive/ball_p.riv", import.meta.url).href,
+                    stateMachines: ["State Machine 1"],
+                    canvas: riveCanvas3,
+                    artboard: "mainPlay",
+                    autoBind: true,
+                    layout: new Layout({ fit: Fit.Layout, layoutScaleFactor: 1.1 }),
+                    autoplay: true,
+                    useOffscreenRenderer: true,
+                    automaticallyHandleEvents: true,
+                    isTouchScrollEnabled: true,
+                    onLoad: () => {
+                        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                        instance.resizeDrawingSurfaceToCanvas(dpr);
+                        this.activeInstances.push(instance);
+                        this.observeVisibility(instance, riveCanvas3);
+                    }
+                });
             });
         }
     }
 
     private setupMainMascot(canvas: HTMLCanvasElement, lenis: any) {
         const riveInstance = new Rive({
-            src: new URL("../assets/rive/raivumascot_WmobileV2.riv", import.meta.url).href,
+            src: new URL("../assets/rive/raivumascot_FixLink2.riv", import.meta.url).href,
             stateMachines: ["State Machine 1"],
             canvas: canvas,
             artboard: "MainArtboard",
@@ -111,6 +129,12 @@ export class RiveManager {
             onLoad: () => {
                 const vmi = riveInstance.viewModelInstance;
                 const isMobileRive = vmi.boolean("isMobile");
+
+                const Mytrigger = vmi.trigger("OpenLink");
+                Mytrigger.on(() => {
+                    console.log("Openlink Trigger");
+                    window.open("https://dribbble.com/RaivuMotionLab", "_blank");
+                })
 
                 const updateMobileState = () => {
                     if (isMobileRive) {
@@ -144,6 +168,13 @@ export class RiveManager {
             onLoad: () => {
                 try {
                     const vmi = riveInstance.viewModelInstance;
+
+                    const Mytrigger2 = vmi.trigger("BtmPressed");
+                    Mytrigger2.on(() => {
+                        console.log("BtmPressed Trigger");
+                        window.open("https://dribbble.com/RaivuMotionLab", "_blank");
+                    })
+
                     if (vmi) {
                         const isMobileRive = vmi.boolean("isMobileCal");
                         const updateMobileState = () => {
